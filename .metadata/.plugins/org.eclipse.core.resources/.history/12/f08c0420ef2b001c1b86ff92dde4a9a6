@@ -1,0 +1,59 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE       
+              
+      routes:
+        - id: user-registration-service
+          uri: lb://user-registration-service
+          predicates:
+            - Path=/user/**
+#          filters:
+#            - RedirectTo=302, http://localhost:8081/login
+                 
+        - id: flight-service
+          uri: lb://flight-service
+          predicates:
+            - Path=/api/v1.0/admin/airline/**
+
+        - id: flight-search-service
+          uri: lb://flight-search-service
+          predicates:
+            - Path=/api/v1.0/user/flight/search
+
+        - id: flight-schedule-service
+          uri: lb://flight-schedule-service
+          predicates:
+            - Path=/api/v1.0/admin/flight/schedule/**      
+
+        - id: flight-booking-service
+          uri: lb://flight-booking-service
+          predicates:
+            - Path=     
+
+        - id: security-service
+          uri: lb://security-service
+          predicates:
+            - Path=/login
+ 
+          
+
+eureka:
+  instance:
+    hostname: localhost
+      

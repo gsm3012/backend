@@ -1,0 +1,15 @@
+package com.flightapp.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class UserHistory 
+{
+	@Id
+	private int userHistoryId;
+	private User user_id;
+	private History history_id;
+	
+	
+}
